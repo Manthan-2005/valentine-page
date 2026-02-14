@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Choices</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 5px #000;
+      margin-bottom: 40px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 30px;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 1.5rem;
+      background-color: #fff;
+      color: #ff1493;
+      border: 3px solid #fff;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+      color: white;
+      transform: scale(1.2) rotate(-5deg);
+      box-shadow: 0 0 20px white;
+    }
+
+    #response {
+      margin-top: 30px;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(-45deg);
+      animation: float 5s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: 10px; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+      100% { transform: translateY(-1000px) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Will you be my Valentine?</h1>
+
+  <div class="button-container">
+    <button onclick="giveResponse('yes')">Yes 💖</button>
+    <button onclick="giveResponse('no')">No 💔</button>
+  </div>
+
+  <div id="response"></div>
+
+  <script>
+    const yesResponses = [
+      "Yay! You made my heart explode! 💖",
+      "Yes! Let’s celebrate love together! 🌹",
+      "Awww… I’m so happy! 😍",
+      "Hooray! You just made my day! 🥰"
+    ];
+
+    const noResponses = [
+      "Oops… already promised my heart to pizza 🍕",
+      "Haha… maybe next year! 😏",
+      "Nope! But chocolate could change my mind 🍫",
+      "Sorry, I'm on a chocolate-only diet! 🍫❤️"
+    ];
+
+    function giveResponse(choice) {
+      let responseArray = choice === 'yes' ? yesResponses : noResponses;
+      const randomIndex = Math.floor(Math.random() * responseArray.length);
+      document.getElementById('response').textContent = responseArray[randomIndex];
+      createHearts(10);
+    }
+
+    function createHearts(count) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.width = heart.style.height = Math.random() * 30 + 20 + 'px';
+        heart.style.animationDuration = (3 + Math.random() * 5) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }
+
+    setInterval(() => createHearts(1), 500);
+  </script>
+
+</body>
+</html>
